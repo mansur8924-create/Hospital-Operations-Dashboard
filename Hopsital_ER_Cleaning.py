@@ -29,4 +29,3 @@ output_file = "Hospital_ER_Cleaned.csv"
 df.to_csv(output_file, index=False)
 
 print(f"Cleaned data saved as '{output_file}'. Ready for Power BI dashboard.")
-
