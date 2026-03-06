@@ -1,29 +1,32 @@
 """
-PROJECT: Hospital ER Data Cleaning
-PURPOSE: Handling missing values and standardizing date formats for Power BI visualization.
-AUTHOR: Mansur Mohammed
+Hospital ER Data Cleaning Script
+Purpose: Clean and standardize ER data for Power BI analysis.
+Author: Mansur Mohammed
 """
 
 import pandas as pd
 import os
 
+# Input file
 input_file = "Hospital ER_Data.csv"
 
+# Load data
 try:
     df = pd.read_csv(input_file)
-    print(f"Successfully loaded {input_file}")
+    print(f"Loaded '{input_file}' successfully.")
 except FileNotFoundError:
-    print(f"Error: {input_file} not found in the current directory.")
+    print(f"Error: '{input_file}' not found in the current directory.")
+    exit(1)  # Stop execution if file not found
 
-# Filling missing Department Referrals to avoid 'Null' errors in Power BI
+# Fill missing values in 'Department Referral' column
 df['Department Referral'] = df['Department Referral'].fillna('None')
 
-# Standardizing date formats to ensure time-intelligence functions work correctly
+# Convert admission date to standard datetime format
 df['Patient Admission Date'] = pd.to_datetime(df['Patient Admission Date'], dayfirst=True)
 
-# save the cleaned file to the current directory for easy import into Power BI.
+# Save cleaned data for Power BI
 output_file = "Hospital_ER_Cleaned.csv"
 df.to_csv(output_file, index=False)
 
-print(f"Success! '{output_file}' has been created and is ready for dashboarding.")
+print(f"Cleaned data saved as '{output_file}'. Ready for Power BI dashboard.")
 
